@@ -5,17 +5,23 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
+import com.ftinc.canvasscript.params.CanvasParams;
 
-public final class CanvasScript {
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+
+public final class CanvasScript implements CanvasProxy{
 
     private Bitmap bitmap;
     private Canvas rootCanvas;
+    private final Deque<CanvasParams> parameters;
 
 
     private CanvasScript(Bitmap bitmap) {
         this.bitmap = bitmap;
+        parameters = new ArrayDeque<>(10);
         rootCanvas = new Canvas(this.bitmap);
-        rootCanvas.draw
     }
 
 
@@ -34,5 +40,12 @@ public final class CanvasScript {
     }
 
 
+    @Override
+    public Bitmap draw() {
+        for (CanvasParams parameter : parameters) {
+            parameter.draw(rootCanvas);
+        }
+        return bitmap;
+    }
 
 }
