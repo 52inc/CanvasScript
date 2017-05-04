@@ -61,7 +61,6 @@ public final class CanvasScript {
     private final Deque<CanvasParams> parameters;
 
 
-
     private CanvasScript() {
         parameters = new ArrayDeque<>(10);
     }
