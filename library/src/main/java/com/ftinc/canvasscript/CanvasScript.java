@@ -46,6 +46,8 @@ import com.ftinc.canvasscript.params.ScaleParams;
 import com.ftinc.canvasscript.params.SkewParams;
 import com.ftinc.canvasscript.params.TranslateParams;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Locale;
@@ -758,6 +760,60 @@ public final class CanvasScript {
     public CanvasScript arc(@NonNull RectF bounds, float startAngle, float sweepAngle, boolean useCenter) {
         checkNonNullPaint();
         parameters.add(new ArcParams(bounds, startAngle, sweepAngle, useCenter, getPaintCopy()));
+        return this;
+    }
+
+
+    /**
+     * Add a bitmap to the render stack
+     * @param bitmap The bitmap to render
+     * @return self for chaining
+     * @see Canvas#drawBitmap(Bitmap, float, float, Paint)
+     */
+    public CanvasScript bitmap(@NonNull Bitmap bitmap) {
+        parameters.add(new BitmapParams(bitmap, 0f, 0f, currentPaint));
+        return this;
+    }
+
+
+    /**
+     * Add a bitmap to the render stack
+     * @param bitmap The bitmap to render
+     * @param paint May be null. The paint to render the bitmap with
+     * @return self for chaining
+     * @see Canvas#drawBitmap(Bitmap, float, float, Paint)
+     */
+    public CanvasScript bitmap(@NonNull Bitmap bitmap, @Nullable Paint paint) {
+        parameters.add(new BitmapParams(bitmap, 0f, 0f, paint));
+        return this;
+    }
+
+
+    /**
+     * Add a bitmap to the render stack
+     * @param bitmap The bitmap to render
+     * @param width The new width of the bitmap to be stretched/scaled into
+     * @param height The new height of the bitmap to be stretched/scaled into
+     * @return self for chaining
+     * @see Canvas#drawBitmap(Bitmap, float, float, Paint)
+     */
+    public CanvasScript bitmap(@NonNull Bitmap bitmap, int width, int height) {
+        parameters.add(new BitmapParams(bitmap, null, new Rect(0, 0, width, height), currentPaint));
+        return this;
+    }
+
+
+    /**
+     * Add a bitmap to the render stack
+     * @param bitmap The bitmap to render
+     * @param width The new width of the bitmap to be stretched/scaled into
+     * @param height The new height of the bitmap to be stretched/scaled into
+     * @param paint May be null. The paint to render the bitmap with
+     * @return self for chaining
+     * @see Canvas#drawBitmap(Bitmap, float, float, Paint)
+     */
+    public CanvasScript bitmap(@NonNull Bitmap bitmap, int width, int height, @Nullable Paint paint) {
+        parameters.add(new BitmapParams(bitmap, null, new Rect(0, 0, width, height), paint));
         return this;
     }
 

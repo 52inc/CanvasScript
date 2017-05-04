@@ -1,9 +1,7 @@
 package com.ftinc.canvasscript.app
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.ftinc.canvasscript.CanvasScript
@@ -21,18 +19,34 @@ class ScriptView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setMeasuredDimension(image.width, image.height);
+        setMeasuredDimension(image.width*2, image.height*2);
     }
 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
         CanvasScript.create()
-                .bitmap(image, 0f, 0f)
-                .color(color(R.color.colorAccent))
-                .circle(measuredWidth/2f, measuredHeight/2f, measuredWidth/4f)
+                .bitmap(getClipBitmap())
+                    .color(color(R.color.colorAccent))
+                    .alpha(0.5f)
+                .rect(0f, 0f, measuredWidth/2f, measuredHeight/2f)
+                    .alpha(1f)
+                    .color(Color.BLUE)
+                .roundedRect(measuredWidth/2f, measuredHeight/2f, measuredWidth.toFloat(), measuredHeight.toFloat(), 20f)
+                    .color(Color.YELLOW)
+                    .style(Paint.Style.STROKE)
+                    .strokeWidth(10f)
+                    .strokeCap(Paint.Cap.ROUND)
+                .arc(20f, 20f, measuredWidth.toFloat() - 40f, measuredHeight.toFloat() - 40f, -135f, 90f, false)
                 .draw(canvas)
+    }
+
+    fun getClipBitmap() : Bitmap {
+        return CanvasScript.create(measuredWidth, measuredHeight)
+                .bitmap(image, measuredWidth, measuredHeight)
+                .xfermode(PorterDuffXfermode(PorterDuff.Mode.CLEAR))
+                .circle(measuredWidth/2f, measuredHeight/2f, measuredWidth/4f)
+                .draw()!!
     }
 
 }

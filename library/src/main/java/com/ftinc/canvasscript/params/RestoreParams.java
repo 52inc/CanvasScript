@@ -21,7 +21,7 @@ public class RestoreParams implements CanvasParams {
 
     @Override
     public void draw(Canvas canvas) {
-        if (count != -1) {
+        if (count == -1) {
             canvas.restore();
         } else {
             canvas.restoreToCount(count);
