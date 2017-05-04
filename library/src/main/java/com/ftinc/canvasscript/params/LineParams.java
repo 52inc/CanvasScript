@@ -15,7 +15,7 @@ public class LineParams implements CanvasParams {
     private final Paint paint;
 
 
-    public LineParams(float startX, float startY, float endX, float endY, Paint paint) {
+    public LineParams(float startX, float startY, float endX, float endY, @NonNull Paint paint) {
         this.paint = paint;
         pts = new float[] { startX, startY, endX, endY };
         offset = 0;
@@ -23,12 +23,12 @@ public class LineParams implements CanvasParams {
     }
 
 
-    public LineParams(@Size(multiple = 4) @NonNull float[] pts, Paint paint) {
+    public LineParams(@Size(multiple = 4) @NonNull float[] pts, @NonNull Paint paint) {
         this(pts, 0, pts.length, paint);
     }
 
 
-    public LineParams(@Size(multiple = 4) @NonNull float[] pts, int offset, int count, Paint paint) {
+    public LineParams(@Size(multiple = 4) @NonNull float[] pts, int offset, int count, @NonNull Paint paint) {
         this.pts = pts;
         this.offset = offset;
         this.count = count;

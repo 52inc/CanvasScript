@@ -15,27 +15,21 @@ public class PointParams implements CanvasParams {
     private final Paint paint;
 
 
-    public PointParams(@NonNull @Size(min = 2, multiple = 2) float[] pts, int offset, int count, @NonNull Paint paint) {
+    public PointParams(float x, float y, @NonNull Paint paint) {
+        this(new float[]{x, y}, paint);
+    }
+
+
+    public PointParams(@Size(multiple = 2) @NonNull float[] pts, @NonNull Paint paint) {
+        this(pts, 0, pts.length, paint);
+    }
+
+
+    public PointParams(@Size(multiple = 2) @NonNull float[] pts, int offset, int count, @NonNull Paint paint) {
         this.pts = pts;
         this.offset = offset;
         this.count = count;
         this.paint = paint;
-    }
-
-
-    public PointParams(float x, float y, @NonNull Paint paint) {
-        this.pts = new float[] { x, y };
-        this.paint = paint;
-        offset = 0;
-        count = 2;
-    }
-
-
-    public PointParams(@NonNull @Size(min = 2, multiple = 2) float[] pts, @NonNull Paint paint) {
-        this.pts = pts;
-        this.paint = paint;
-        offset = 0;
-        count = pts.length;
     }
 
 

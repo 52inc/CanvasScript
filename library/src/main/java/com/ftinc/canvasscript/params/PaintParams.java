@@ -3,6 +3,7 @@ package com.ftinc.canvasscript.params;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 
 
 public class PaintParams implements CanvasParams {
@@ -10,7 +11,7 @@ public class PaintParams implements CanvasParams {
     private final Paint paint;
 
 
-    public PaintParams(Paint paint) {
+    public PaintParams(@NonNull Paint paint) {
         this.paint = paint;
     }
 

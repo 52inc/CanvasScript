@@ -25,6 +25,11 @@ public class ColorParams implements CanvasParams {
     }
 
 
+    public ColorParams(int r, int g, int b) {
+        this(255, r, g, b, null);
+    }
+
+
     public ColorParams(int a, int r, int g, int b) {
         this(a, r, g, b, null);
     }

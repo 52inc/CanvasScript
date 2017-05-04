@@ -15,7 +15,7 @@ public class SaveLayerParams implements CanvasParams {
     @Nullable private final Paint paint;
 
 
-    public SaveLayerParams(RectF bounds, Paint paint, int saveFlags) {
+    public SaveLayerParams(@Nullable RectF bounds, @Nullable Paint paint, int saveFlags) {
         this.bounds = bounds;
         this.paint = paint;
         this.saveFlags = saveFlags;
@@ -23,22 +23,22 @@ public class SaveLayerParams implements CanvasParams {
     }
 
 
-    public SaveLayerParams(RectF bounds, Paint paint) {
+    public SaveLayerParams(@Nullable RectF bounds, @Nullable Paint paint) {
         this(bounds, paint, Canvas.ALL_SAVE_FLAG);
     }
 
 
-    public SaveLayerParams(float left, float top, float right, float bottom, Paint paint, int saveFlags) {
+    public SaveLayerParams(float left, float top, float right, float bottom, @Nullable Paint paint, int saveFlags) {
         this(new RectF(left, top, right, bottom), paint, saveFlags);
     }
 
 
-    public SaveLayerParams(float left, float top, float right, float bottom, Paint paint) {
+    public SaveLayerParams(float left, float top, float right, float bottom, @Nullable Paint paint) {
         this(left, top, right, bottom, paint, Canvas.ALL_SAVE_FLAG);
     }
 
 
-    public SaveLayerParams(RectF bounds, int alpha, int saveFlags) {
+    public SaveLayerParams(@Nullable RectF bounds, int alpha, int saveFlags) {
         this.bounds = bounds;
         this.alpha = alpha;
         this.saveFlags = saveFlags;

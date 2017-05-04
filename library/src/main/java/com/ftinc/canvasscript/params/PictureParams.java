@@ -23,14 +23,14 @@ public class PictureParams implements CanvasParams {
     }
 
 
-    public PictureParams(@NonNull Picture picture, Rect dest) {
+    public PictureParams(@NonNull Picture picture, @NonNull Rect dest) {
         this.picture = picture;
         this.dest = dest;
         destF = null;
     }
 
 
-    public PictureParams(@NonNull Picture picture, RectF destF) {
+    public PictureParams(@NonNull Picture picture, @NonNull RectF destF) {
         this.picture = picture;
         this.destF = destF;
         dest = null;
