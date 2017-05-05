@@ -20,7 +20,8 @@ public class PathParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.drawPath(path, paint);
+        return NO_SAVE;
     }
 }

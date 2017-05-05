@@ -25,20 +25,14 @@ class ScriptView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        CanvasScript.create()
-                .bitmap(getClipBitmap())
-                    .color(color(R.color.colorAccent))
-                    .alpha(0.5f)
-                .rect(0f, 0f, measuredWidth/2f, measuredHeight/2f)
-                    .alpha(1f)
-                    .color(Color.BLUE)
-                .roundedRect(measuredWidth/2f, measuredHeight/2f, measuredWidth.toFloat(), measuredHeight.toFloat(), 20f)
-                    .color(Color.YELLOW)
-                    .style(Paint.Style.STROKE)
-                    .strokeWidth(10f)
-                    .strokeCap(Paint.Cap.ROUND)
-                .arc(20f, 20f, measuredWidth.toFloat() - 40f, measuredHeight.toFloat() - 40f, -135f, 90f, false)
-                .draw(canvas)
+        CanvasScript.wrap(canvas)
+                .saveLayer()
+                .bitmap(image, measuredWidth, measuredHeight)
+                .porterDuffXfer(PorterDuff.Mode.CLEAR)
+                .circle(measuredWidth/2f, measuredHeight/2f, measuredWidth/4f)
+                .drawColor(Color.RED, PorterDuff.Mode.SRC_IN)
+                .restore()
+                .draw()
     }
 
     fun getClipBitmap() : Bitmap {
@@ -47,6 +41,23 @@ class ScriptView @JvmOverloads constructor(
                 .xfermode(PorterDuffXfermode(PorterDuff.Mode.CLEAR))
                 .circle(measuredWidth/2f, measuredHeight/2f, measuredWidth/4f)
                 .draw()!!
+    }
+
+    fun scriptTest1(canvas: Canvas?) {
+        CanvasScript.wrap(canvas)
+                .bitmap(getClipBitmap())
+                .color(color(R.color.colorAccent))
+                .alpha(0.5f)
+                .rect(0f, 0f, measuredWidth/2f, measuredHeight/2f)
+                .alpha(1f)
+                .color(Color.BLUE)
+                .roundedRect(measuredWidth/2f, measuredHeight/2f, measuredWidth.toFloat(), measuredHeight.toFloat(), 20f)
+                .color(Color.YELLOW)
+                .style(Paint.Style.STROKE)
+                .strokeWidth(10f)
+                .strokeCap(Paint.Cap.ROUND)
+                .arc(20f, 20f, measuredWidth.toFloat() - 40f, measuredHeight.toFloat() - 40f, -135f, 90f, false)
+                .draw()
     }
 
 }

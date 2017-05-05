@@ -37,11 +37,12 @@ public class LineParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (pts.length == 4) {
             canvas.drawLine(pts[0], pts[1], pts[2], pts[3], paint);
         } else {
             canvas.drawLines(pts, offset, count, paint);
         }
+        return NO_SAVE;
     }
 }

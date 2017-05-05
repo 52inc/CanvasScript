@@ -38,7 +38,7 @@ public class PictureParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (destF != null) {
             canvas.drawPicture(picture, destF);
         } else if (dest != null) {
@@ -46,5 +46,6 @@ public class PictureParams implements CanvasParams {
         } else {
             canvas.drawPicture(picture);
         }
+        return NO_SAVE;
     }
 }

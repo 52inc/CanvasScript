@@ -34,11 +34,12 @@ public class PointParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (count == 2) {
             canvas.drawPoint(pts[0], pts[1], paint);
         } else {
             canvas.drawPoints(pts, offset, count, paint);
         }
+        return NO_SAVE;
     }
 }

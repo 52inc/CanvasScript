@@ -20,7 +20,8 @@ public class SkewParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.skew(sx, sy);
+        return NO_SAVE;
     }
 }

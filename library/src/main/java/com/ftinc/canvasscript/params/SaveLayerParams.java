@@ -52,11 +52,11 @@ public class SaveLayerParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (alpha == -1) {
-            canvas.saveLayer(bounds, paint, saveFlags);
+            return canvas.saveLayer(bounds, paint, saveFlags);
         } else {
-            canvas.saveLayerAlpha(bounds, alpha, saveFlags);
+            return canvas.saveLayerAlpha(bounds, alpha, saveFlags);
         }
     }
 }

@@ -32,11 +32,12 @@ public class RotateParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (px == 0 && py == 0) {
             canvas.rotate(degrees);
         } else {
             canvas.rotate(degrees, px, py);
         }
+        return NO_SAVE;
     }
 }

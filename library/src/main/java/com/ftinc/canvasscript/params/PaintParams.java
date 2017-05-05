@@ -17,7 +17,8 @@ public class PaintParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.drawPaint(paint);
+        return NO_SAVE;
     }
 }

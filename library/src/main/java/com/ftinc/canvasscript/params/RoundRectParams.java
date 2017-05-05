@@ -48,7 +48,8 @@ public class RoundRectParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.drawRoundRect(bounds, rx, ry, paint);
+        return NO_SAVE;
     }
 }

@@ -23,7 +23,8 @@ public class CircleParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.drawCircle(centerX, centerY, radius, paint);
+        return NO_SAVE;
     }
 }

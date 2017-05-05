@@ -20,11 +20,11 @@ public class SaveParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (flags != -1) {
-            canvas.save();
+            return canvas.save();
         } else {
-            canvas.save(flags);
+            return canvas.save(flags);
         }
     }
 }

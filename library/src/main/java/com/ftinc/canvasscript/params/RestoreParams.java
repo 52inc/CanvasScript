@@ -6,11 +6,11 @@ import android.graphics.Canvas;
 
 public class RestoreParams implements CanvasParams {
 
-    private final int count;
+    private int count;
 
 
     public RestoreParams() {
-        count = -1;
+        count = NO_SAVE;
     }
 
 
@@ -19,12 +19,23 @@ public class RestoreParams implements CanvasParams {
     }
 
 
+    public int getCount() {
+        return count;
+    }
+
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (count == -1) {
             canvas.restore();
         } else {
             canvas.restoreToCount(count);
         }
+        return 0;
     }
 }

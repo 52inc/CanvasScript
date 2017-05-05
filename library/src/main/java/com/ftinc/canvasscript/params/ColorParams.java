@@ -42,11 +42,12 @@ public class ColorParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (mode == null) {
             canvas.drawColor(color);
         } else {
             canvas.drawColor(color, mode);
         }
+        return NO_SAVE;
     }
 }

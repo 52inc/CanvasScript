@@ -38,7 +38,8 @@ public class ArcParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.drawArc(bounds, startAngle, sweepAngle, useCenter, paint);
+        return NO_SAVE;
     }
 }

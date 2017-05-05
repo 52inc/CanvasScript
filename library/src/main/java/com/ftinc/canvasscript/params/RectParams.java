@@ -48,7 +48,7 @@ public class RectParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (rect != null) {
             canvas.drawRect(rect, paint);
         } else if (rectF != null) {
@@ -56,5 +56,6 @@ public class RectParams implements CanvasParams {
         } else {
             canvas.drawRect(left, top, right, bottom, paint);
         }
+        return NO_SAVE;
     }
 }

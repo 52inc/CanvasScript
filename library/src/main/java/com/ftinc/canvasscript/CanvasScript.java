@@ -11,6 +11,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.Picture;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -29,6 +31,7 @@ import com.ftinc.canvasscript.params.ArcParams;
 import com.ftinc.canvasscript.params.BitmapParams;
 import com.ftinc.canvasscript.params.CanvasParams;
 import com.ftinc.canvasscript.params.CircleParams;
+import com.ftinc.canvasscript.params.ColorParams;
 import com.ftinc.canvasscript.params.ConcatParams;
 import com.ftinc.canvasscript.params.LineParams;
 import com.ftinc.canvasscript.params.OvalParams;
@@ -45,8 +48,7 @@ import com.ftinc.canvasscript.params.SaveParams;
 import com.ftinc.canvasscript.params.ScaleParams;
 import com.ftinc.canvasscript.params.SkewParams;
 import com.ftinc.canvasscript.params.TranslateParams;
-
-import org.jetbrains.annotations.NotNull;
+import com.ftinc.canvasscript.util.Log;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -55,43 +57,77 @@ import java.util.Locale;
 
 public final class CanvasScript {
 
+    private static final String TAG = "CanvasScript";
+    private static final boolean DEBUG = true;
     private static final int DEFAULT_PAINT_FLAGS = Paint.ANTI_ALIAS_FLAG;
 
+    static {
+        Log.setEnabled(DEBUG);
+    }
+
     @Nullable private Bitmap bitmap;
-    @Nullable private Canvas rootCanvas;
     @Nullable private Paint currentPaint;
+    @NonNull private Canvas rootCanvas;
     private final Deque<CanvasParams> parameters;
+    private int currentSaveCount = CanvasParams.NO_SAVE;
 
 
-    private CanvasScript() {
+    private CanvasScript(@NonNull Canvas canvas) {
         parameters = new ArrayDeque<>(10);
+        rootCanvas = canvas;
     }
 
 
     private CanvasScript(@NonNull Bitmap bitmap) {
-        this();
         this.bitmap = bitmap;
+        parameters = new ArrayDeque<>(10);
         rootCanvas = new Canvas(this.bitmap);
     }
 
 
-    public static CanvasScript create() {
-        return new CanvasScript();
-    }
-
-
+    /**
+     * Create a new instance with a new bitmap defined by the following parameters
+     * @param width the width of the new bitmap to draw to
+     * @param height the height of the new bitmap to draw to
+     * @return self for chaining
+     */
     public static CanvasScript create(int width, int height) {
         return create(width, height, Bitmap.Config.ARGB_8888);
     }
 
 
+    /**
+     * Create a new instance with a new bitmap defined by the following parameters
+     * @param width the width of the new bitmap to draw to
+     * @param height the height of the new bitmap to draw to
+     * @param config the bitmap configuration
+     * @return self for chaining
+     * @see Canvas(Bitmap)
+     */
     public static CanvasScript create(int width, int height, @NonNull Bitmap.Config config) {
         return new CanvasScript(Bitmap.createBitmap(width, height, config));
     }
 
 
+    /**
+     * Create a new instance with a bitmap instance that will be the root of the
+     * {@link Canvas} created
+     * @param bitmap the base drawing bitmap
+     * @return self for chaining
+     * @see Canvas(Bitmap)
+     */
     public static CanvasScript create(@NonNull Bitmap bitmap) {
         return new CanvasScript(bitmap);
+    }
+
+
+    /**
+     * Wrap an existing canvas to direct all the script calls to when calling {@link #draw()}
+     * @param canvas the canvas to wrap and direct all drawing calls to
+     * @return self for chaining
+     */
+    public static CanvasScript wrap(Canvas canvas) {
+        return new CanvasScript(canvas);
     }
 
 
@@ -198,6 +234,13 @@ public final class CanvasScript {
     public CanvasScript xfermode(Xfermode xfermode) {
         createPaintIfNull();
         currentPaint.setXfermode(xfermode);
+        return this;
+    }
+
+
+    public CanvasScript porterDuffXfer(PorterDuff.Mode mode) {
+        createPaintIfNull();
+        currentPaint.setXfermode(new PorterDuffXfermode(mode));
         return this;
     }
 
@@ -1089,6 +1132,31 @@ public final class CanvasScript {
 
 
     /**
+     * Add a color render to the stack
+     * @param color The color to draw to the canvas
+     * @return self for chaining
+     * @see Canvas#drawColor(int)
+     */
+    public CanvasScript drawColor(@ColorInt int color) {
+        parameters.add(new ColorParams(color));
+        return this;
+    }
+
+
+    /**
+     * Add a color render to the stack
+     * @param color The color to draw to the canvas
+     * @param mode The porter duff mode to render with
+     * @return self for chaining
+     * @see Canvas#drawColor(int, android.graphics.PorterDuff.Mode)
+     */
+    public CanvasScript drawColor(@ColorInt int color, PorterDuff.Mode mode) {
+        parameters.add(new ColorParams(color, mode));
+        return this;
+    }
+
+
+    /**
      * Add a paint render to the stack
      * @param paint a paint object to draw to the canvas
      * @return self for chaining
@@ -1119,6 +1187,17 @@ public final class CanvasScript {
      */
     public CanvasScript save(int saveFlags) {
         parameters.add(new SaveParams(saveFlags));
+        return this;
+    }
+
+
+    /**
+     * Add a canvas save layer to the stack
+     * @return self for chaining
+     * @see Canvas#saveLayer(RectF, Paint)
+     */
+    public CanvasScript saveLayer() {
+        parameters.add(new SaveLayerParams(null, null));
         return this;
     }
 
@@ -1353,23 +1432,19 @@ public final class CanvasScript {
      */
     @Nullable
     public Bitmap draw() {
-        if (rootCanvas != null) {
-            for (CanvasParams parameter : parameters) {
-                parameter.draw(rootCanvas);
+        for (CanvasParams parameter : parameters) {
+            if (parameter instanceof RestoreParams && currentSaveCount != CanvasParams.NO_SAVE) {
+                ((RestoreParams) parameter).setCount(currentSaveCount);
+            }
+
+            Log.d(TAG, "Rendering Script (%s): saveCount(%d)", parameter, currentSaveCount);
+
+            int saveCount = parameter.draw(rootCanvas);
+            if (saveCount != CanvasParams.NO_SAVE) {
+                currentSaveCount = saveCount;
             }
         }
         return bitmap;
-    }
-
-
-    /**
-     * Render all commands to an external canvas for rendering
-     * @param canvas The canvas to render all script commands to
-     */
-    public void draw(Canvas canvas) {
-        for (CanvasParams parameter : parameters) {
-            parameter.draw(canvas);
-        }
     }
 
 

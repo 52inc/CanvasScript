@@ -26,7 +26,8 @@ public class OvalParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.drawOval(bounds, paint);
+        return NO_SAVE;
     }
 }

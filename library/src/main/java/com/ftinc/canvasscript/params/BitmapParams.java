@@ -72,7 +72,7 @@ public class BitmapParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         if (matrix != null) {
             canvas.drawBitmap(bitmap, matrix, paint);
         } else if (destF != null) {
@@ -82,5 +82,6 @@ public class BitmapParams implements CanvasParams {
         } else {
             canvas.drawBitmap(bitmap, left, top, paint);
         }
+        return NO_SAVE;
     }
 }

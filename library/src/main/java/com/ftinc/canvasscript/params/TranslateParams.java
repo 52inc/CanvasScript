@@ -19,7 +19,8 @@ public class TranslateParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.translate(dx, dy);
+        return NO_SAVE;
     }
 }

@@ -17,7 +17,8 @@ public class ConcatParams implements CanvasParams {
 
 
     @Override
-    public void draw(Canvas canvas) {
+    public int draw(Canvas canvas) {
         canvas.concat(matrix);
+        return NO_SAVE;
     }
 }
