@@ -30,22 +30,8 @@ class ScriptView @JvmOverloads constructor(
                 .bitmap(image, measuredWidth, measuredHeight)
                 .porterDuffXfer(PorterDuff.Mode.CLEAR)
                 .circle(measuredWidth/2f, measuredHeight/2f, measuredWidth/4f)
-                .drawColor(Color.RED, PorterDuff.Mode.SRC_IN)
+                .paint(null)
                 .restore()
-                .draw()
-    }
-
-    fun getClipBitmap() : Bitmap {
-        return CanvasScript.create(measuredWidth, measuredHeight)
-                .bitmap(image, measuredWidth, measuredHeight)
-                .xfermode(PorterDuffXfermode(PorterDuff.Mode.CLEAR))
-                .circle(measuredWidth/2f, measuredHeight/2f, measuredWidth/4f)
-                .draw()!!
-    }
-
-    fun scriptTest1(canvas: Canvas?) {
-        CanvasScript.wrap(canvas)
-                .bitmap(getClipBitmap())
                 .color(color(R.color.colorAccent))
                 .alpha(0.5f)
                 .rect(0f, 0f, measuredWidth/2f, measuredHeight/2f)

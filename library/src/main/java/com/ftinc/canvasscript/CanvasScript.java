@@ -134,7 +134,7 @@ public final class CanvasScript {
     /*   Paint Methods   */
 
 
-    public CanvasScript paint(@NonNull Paint paint) {
+    public CanvasScript paint(@Nullable Paint paint) {
         currentPaint = paint;
         return this;
     }
