@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
@@ -34,4 +35,28 @@ dependencies {
     testCompile "org.mockito:mockito-core:$mockitoVersion"
     testCompile "org.robolectric:robolectric:$robolectricVersion"
     compile "com.android.support:support-annotations:$supportVersion"
+}
+
+bintray {
+    user = 52INC_BINTRAY_USER
+    key = 52INC_BINTRAY_API_KEY
+    pkg {
+        repo = 'canvasscript'
+        name = 'Canvas Script'
+        userOrg = 'bintray_user'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/52inc/CanvasScript.git'
+        version {
+            name = version
+            desc = versionDesc
+            released = new Date()
+            vcsTag = "v$version"
+        }
+    }
+}
+
+publishing {
+    publications {
+
+    }
 }
