@@ -58,11 +58,10 @@ import java.util.Locale;
 public final class CanvasScript {
 
     private static final String TAG = "CanvasScript";
-    private static final boolean DEBUG = true;
     private static final int DEFAULT_PAINT_FLAGS = Paint.ANTI_ALIAS_FLAG;
 
     static {
-        Log.setEnabled(DEBUG);
+        Log.setEnabled(BuildConfig.DEBUG);
     }
 
     @Nullable private Bitmap bitmap;
@@ -351,6 +350,33 @@ public final class CanvasScript {
      */
     public CanvasScript custom(@NonNull CanvasParams customParameter) {
         parameters.add(customParameter);
+        return this;
+    }
+
+
+    /**
+     * Add another Canvas script build parameters to this script
+     * @param script the other canvas script to concat onto this one
+     * @return self for chaining
+     */
+    public CanvasScript script(CanvasScript script) {
+        parameters.addAll(script.parameters);
+        return this;
+    }
+
+
+    /**
+     * Add another script as a child offset by dx, dy
+     * @param dx the x-offset of the script
+     * @param dy the y-offset of the script
+     * @param script the script to concatenate
+     * @return self for chaining
+     */
+    public CanvasScript script(float dx, float dy, CanvasScript script) {
+        parameters.add(new SaveParams());
+        parameters.add(new TranslateParams(dx, dy));
+        parameters.addAll(script.parameters);
+        parameters.add(new RestoreParams());
         return this;
     }
 
