@@ -38,16 +38,30 @@ public final class PaintScript {
     }
 
 
+    /**
+     * Create a new {@link PaintScript} with the default {@link Paint#ANTI_ALIAS_FLAG} set
+     * @return new {@link PaintScript}
+     */
     public static PaintScript create() {
         return new PaintScript(Paint.ANTI_ALIAS_FLAG);
     }
 
 
+    /**
+     * Create a new {@link PaintScript} with the given {@link Paint} flags
+     * @param flags the set of flags to initialize the paint object with
+     * @return a new {@link PaintScript}
+     */
     public static PaintScript create(int flags) {
         return new PaintScript(flags);
     }
 
 
+    /**
+     * Create a new {@link PaintScript} based on another Paint object
+     * @param paint an existing paint object to start with and add upon
+     * @return a new {@link PaintScript}
+     */
     public static PaintScript create(Paint paint) {
         return new PaintScript(paint);
     }
@@ -168,9 +182,7 @@ public final class PaintScript {
 
 
     public PaintScript clearShadow() {
-        if (paint != null) {
-            paint.clearShadowLayer();
-        }
+        paint.clearShadowLayer();
         return this;
     }
 
@@ -227,6 +239,10 @@ public final class PaintScript {
     }
 
 
+    /**
+     * Build and return the scripted paint object
+     * @return the built {@link Paint} object
+     */
     public Paint build() {
         return paint;
     }
