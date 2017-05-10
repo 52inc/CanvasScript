@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
@@ -38,8 +39,8 @@ dependencies {
 }
 
 bintray {
-    user = 52INC_BINTRAY_USER
-    key = 52INC_BINTRAY_API_KEY
+    user = FTINC_BINTRAY_USER
+    key = FTINC_BINTRAY_API_KEY
     pkg {
         repo = 'canvasscript'
         name = 'Canvas Script'
