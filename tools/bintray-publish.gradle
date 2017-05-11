@@ -102,3 +102,11 @@ artifacts {
     archives androidSourcesJar
     archives androidJavadocsJar
 }
+
+task publishArchives {
+    dependsOn 'clean'
+    dependsOn 'install'
+    dependsOn 'bintrayUpload'
+    tasks.findByName('install').mustRunAfter 'clean'
+    tasks.findByName('bintrayUpload').mustRunAfter 'install'
+}
