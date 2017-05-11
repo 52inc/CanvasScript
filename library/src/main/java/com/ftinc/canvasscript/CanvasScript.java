@@ -116,7 +116,7 @@ public final class CanvasScript {
      * @param height the height of the new bitmap to draw to
      * @param config the bitmap configuration
      * @return self for chaining
-     * @see Canvas(Bitmap)
+     * @see Canvas
      */
     public static CanvasScript create(int width, int height, @NonNull Bitmap.Config config) {
         return new CanvasScript(Bitmap.createBitmap(width, height, config));
@@ -128,7 +128,7 @@ public final class CanvasScript {
      * {@link Canvas} created
      * @param bitmap the base drawing bitmap
      * @return self for chaining
-     * @see Canvas(Bitmap)
+     * @see Canvas
      */
     public static CanvasScript create(@NonNull Bitmap bitmap) {
         return new CanvasScript(bitmap);
@@ -473,9 +473,7 @@ public final class CanvasScript {
      * @param pts The array, in multiples of 4, of points that represent the line [x0, y0, x1, y1, ..]
      * @param offset   Number of values in the array to skip before drawing.
      * @param count    The number of values in the array to process, after
-     *                 skipping "offset" of them. Since each line uses 4 values,
-     *                 the number of "lines" that are drawn is really
-     *                 (count >> 2).
+     *                 skipping "offset" of them.
      * @return self for chaining
      * @see Canvas#drawLines(float[], Paint)
      */
@@ -491,9 +489,7 @@ public final class CanvasScript {
      * @param pts The array, in multiples of 4, of points that represent the line [x0, y0, x1, y1, ..]
      * @param offset Number of values in the array to skip before drawing.
      * @param count The number of values in the array to process, after
-     *              skipping "offset" of them. Since each line uses 4 values,
-     *              the number of "lines" that are drawn is really
-     *              (count >> 2).
+     *              skipping "offset" of them.
      * @param paint The custom paint to draw the lines with
      * @return self for chaining
      * @see Canvas#drawLines(float[], Paint)
@@ -1052,8 +1048,7 @@ public final class CanvasScript {
      * @param pts Array of points to draw [x0 y0 x1 y1 x2 y2 ...]
      * @param offset Number of values to skip before starting to draw.
      * @param count The number of values to process, after skipping offset
-     *              of them. Since one point uses two values, the number of
-     *              "points" that are drawn is really (count >> 1).
+     *              of them.
      * @param paint The paint used to draw the points
      * @return self for chaining
      * @see Canvas#drawPoints(float[], int, int, Paint)
@@ -1096,8 +1091,7 @@ public final class CanvasScript {
      * @param pts Array of points to draw [x0 y0 x1 y1 x2 y2 ...]
      * @param offset Number of values to skip before starting to draw.
      * @param count The number of values to process, after skipping offset
-     *              of them. Since one point uses two values, the number of
-     *              "points" that are drawn is really (count >> 1).
+     *              of them
      * @return self for chaining
      * @see Canvas#drawPoints(float[], int, int, Paint)
      */
