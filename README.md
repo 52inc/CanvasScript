@@ -30,7 +30,7 @@ CanvasScript.wrap(Canvas canvas)
 
 This will return a script instance wrapped around an existing `Canvas` (i.e. if you are trying to use the script to render in a custom view object) where all drawing calls will be directed and rendered to.
 
--
+---
 
 Once you have initialized your script object you can then start chaining drawing and paint calls that will be combined sequentially in the order they were called when you call the `.draw()` function. If you created your script using **Method #1** then it will return the provided/created `Bitmap` that was drawn upon. If you created your script using **Method #2** then it will return `null`. 
 
