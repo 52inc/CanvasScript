@@ -131,6 +131,9 @@ public final class CanvasScript {
      * @see Canvas
      */
     public static CanvasScript create(@NonNull Bitmap bitmap) {
+        if (!bitmap.isMutable() || bitmap.isRecycled()){
+            throw new IllegalArgumentException("Bitmap must be mutable and unrecycled");
+        }
         return new CanvasScript(bitmap);
     }
 

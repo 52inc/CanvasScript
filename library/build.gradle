@@ -17,7 +17,7 @@
 apply plugin: 'com.android.library'
 
 group = GROUP
-version = VERSION_CODE
+version = VERSION_NAME
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
@@ -39,3 +39,12 @@ dependencies {
 }
 
 apply from: '../tools/bintray-publish.gradle'
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+
+afterEvaluate { project ->
+    android.libraryVariants.all { variant ->
+        tasks.androidJavadocs.doFirst {
+            classpath += files(variant.javaCompile.classpath.files)
+        }
+    }
+}

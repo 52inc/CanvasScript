@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.github.dcendents.android-maven'
 
-project.archivesBaseName = ARTIFACT_ID
+project.archivesBaseName = POM_ARTIFACT_ID
 
 install {
     repositories.mavenInstaller {
@@ -29,8 +30,8 @@ install {
 
                 packaging POM_PACKAGING
                 groupId GROUP
-                artifactId ARTIFACT_ID
-                version VERSION_CODE
+                artifactId POM_ARTIFACT_ID
+                version VERSION_NAME
 
                 licenses {
                     license {
@@ -68,11 +69,13 @@ bintray {
         userOrg = '52inc'
         licenses = ['Apache-2.0']
         vcsUrl = POM_URL
+        publish = true
+        publicDownloadNumbers = true
         version {
-            name = VERSION_CODE
+            name = VERSION_NAME
             desc = VERSION_DESC
             released = new Date()
-            vcsTag = "v$VERSION_CODE"
+            vcsTag = "v$VERSION_NAME"
         }
     }
 }
@@ -80,12 +83,6 @@ bintray {
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-afterEvaluate {
-    androidJavadocs.classpath += files(android.libraryVariants.collect { variant ->
-        variant.javaCompile.classpath.files
-    })
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
