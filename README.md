@@ -41,7 +41,7 @@ There are basically **two** groups of methods: **Paint** methods, and **Canvas**
 
 These methods modify an internally tracked `Paint` object that can be implicitly provided for all the `Canvas` drawing calls so you don't have to keep track of creating and supplying your own (unless you want to).
 
-[`CanvasScript.java L151 - L355`](https://github.com/52inc/CanvasScript/blob/master/library/src/main/java/com/ftinc/canvasscript/CanvasScript.java#L151-L355)
+[`CanvasScript.java L155 - L359`](https://github.com/52inc/CanvasScript/blob/master/library/src/main/java/com/ftinc/canvasscript/CanvasScript.java#L155-L359)
 
 One of these methods must be called to initialize the internal paint object before calling and implicity canvas method or else you will get an `IllegalStateException`
 
@@ -50,7 +50,7 @@ One of these methods must be called to initialize the internal paint object befo
 These methods are instructions for calls to the `Canvas` object to be rendered sequentially:
 
 
-[`CanvasScript.java L358 - L1457`](https://github.com/52inc/CanvasScript/blob/master/library/src/main/java/com/ftinc/canvasscript/CanvasScript.java#L358-L1457)
+[`CanvasScript.java L362 - L1480`](https://github.com/52inc/CanvasScript/blob/master/library/src/main/java/com/ftinc/canvasscript/CanvasScript.java#L362-L1480)
 
 There is a version of every call to account for all possible drawing methods for their `Canvas` equivelents. There is also a duplicate call where you can supply your own `Paint` object for rendering instead of using the internally tracked one mentioned above.
 
