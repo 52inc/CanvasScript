@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.library'
+apply from: '../tools/quality.gradle'
 
 group = GROUP
 version = VERSION_NAME
@@ -27,6 +28,10 @@ android {
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    lintOptions {
+        abortOnError true
     }
 }
 
