@@ -15,11 +15,14 @@
  */
 package com.ftinc.canvasscript.util;
 
+
 import java.util.Locale;
+
 
 public final class Log {
 
     private static boolean enabled = true;
+
 
     private Log() {
         // Unused

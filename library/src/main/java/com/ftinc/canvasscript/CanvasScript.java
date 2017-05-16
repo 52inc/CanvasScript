@@ -128,6 +128,7 @@ public final class CanvasScript {
      * {@link Canvas} created
      * @param bitmap the base drawing bitmap
      * @return self for chaining
+     * @throws IllegalStateException if bitmap is not mutable or is recycled
      * @see Canvas
      */
     public static CanvasScript create(@NonNull Bitmap bitmap) {
@@ -436,6 +437,7 @@ public final class CanvasScript {
      * @param ex The end-x coordinate
      * @param ey The end-y coordinate
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawLine(float, float, float, float, Paint)
      */
     public CanvasScript line(float sx, float sy, float ex, float ey) {
@@ -449,6 +451,7 @@ public final class CanvasScript {
      * Add a set of lines to the render stack
      * @param pts The array, in multiples of 4, of points that represent the line [x0, y0, x1, y1, ..]
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawLines(float[], Paint)
      */
     public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts) {
@@ -478,6 +481,7 @@ public final class CanvasScript {
      * @param count    The number of values in the array to process, after
      *                 skipping "offset" of them.
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawLines(float[], Paint)
      */
     public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts, int offset, int count) {
@@ -510,6 +514,7 @@ public final class CanvasScript {
      * @param right The right of the bounds to draw in
      * @param bottom The bottom of the bounds to draw in
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawOval(float, float, float, float, Paint)
      */
     public CanvasScript oval(float left, float top, float right, float bottom) {
@@ -539,6 +544,7 @@ public final class CanvasScript {
      * Add an oval to the render stack
      * @param bounds The bounds of the oval to draw in
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawOval(RectF, Paint)
      */
     public CanvasScript oval(@NonNull RectF bounds) {
@@ -568,6 +574,7 @@ public final class CanvasScript {
      * @param right The right of the rect bounds
      * @param bottom The bottom of the rect bounds
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawRect(float, float, float, float, Paint)
      */
     public CanvasScript rect(float left, float top, float right, float bottom) {
@@ -581,6 +588,7 @@ public final class CanvasScript {
      * Add a rect to the render stack
      * @param rect The bounds of the rectangle
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawRect(Rect, Paint)
      */
     public CanvasScript rect(@NonNull Rect rect) {
@@ -594,6 +602,7 @@ public final class CanvasScript {
      * Add a rect to the render stack
      * @param rect The bounds of the rectangle
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawRect(RectF, Paint)
      */
     public CanvasScript rect(@NonNull RectF rect) {
@@ -720,6 +729,7 @@ public final class CanvasScript {
      * @param rx The x-radius of the oval corners
      * @param ry The y-radius of the oval corners
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawRoundRect(float, float, float, float, float, float, Paint)
      */
     public CanvasScript roundedRect(float left, float top, float right, float bottom, float rx, float ry) {
@@ -737,6 +747,7 @@ public final class CanvasScript {
      * @param bottom The bottom bound of the rect
      * @param radius The radius of the circle corners
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawRoundRect(float, float, float, float, float, float, Paint)
      */
     public CanvasScript roundedRect(float left, float top, float right, float bottom, float radius) {
@@ -752,6 +763,7 @@ public final class CanvasScript {
      * @param rx The x-radius of the oval corners
      * @param ry The y-radius of the oval corners
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawRoundRect(float, float, float, float, float, float, Paint)
      */
     public CanvasScript roundedRect(@NonNull RectF bounds, float rx, float ry) {
@@ -766,6 +778,7 @@ public final class CanvasScript {
      * @param bounds The bounds of the rect
      * @param radius The radius of the circle corners
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawRoundRect(float, float, float, float, float, float, Paint)
      */
     public CanvasScript roundedRect(@NonNull RectF bounds, float radius) {
@@ -786,6 +799,7 @@ public final class CanvasScript {
      * @param useCenter whether to include rendering the center with the arc
      * @param paint The paint to draw with
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawArc(float, float, float, float, float, float, boolean, Paint)
      */
     public CanvasScript arc(float left, float top, float right, float bottom, float startAngle, float sweepAngle,
@@ -821,6 +835,7 @@ public final class CanvasScript {
      * @param sweepAngle The amount in degrees that the arc spans
      * @param useCenter whether to include rendering the center with the arc
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawArc(float, float, float, float, float, float, boolean, Paint)
      */
     public CanvasScript arc(float left, float top, float right, float bottom, float startAngle, float sweepAngle,
@@ -838,6 +853,7 @@ public final class CanvasScript {
      * @param sweepAngle The amount in degrees that the arc spans
      * @param useCenter whether to include rendering the center with the arc
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawArc(RectF, float, float, boolean, Paint)
      */
     public CanvasScript arc(@NonNull RectF bounds, float startAngle, float sweepAngle, boolean useCenter) {
@@ -1067,6 +1083,7 @@ public final class CanvasScript {
      * @param x The x-coordinate of the point
      * @param y The y-coordinate of the point
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawPoint(float, float, Paint)
      */
     public CanvasScript point(float x, float y) {
@@ -1080,6 +1097,7 @@ public final class CanvasScript {
      * Add a set of points to the render stack
      * @param pts Array of points to draw [x0 y0 x1 y1 x2 y2 ...]
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawPoints(float[], Paint)
      */
     public CanvasScript points(@Size(multiple = 2) @NonNull float[] pts) {
@@ -1096,6 +1114,7 @@ public final class CanvasScript {
      * @param count The number of values to process, after skipping offset
      *              of them
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawPoints(float[], int, int, Paint)
      */
     public CanvasScript points(@Size(multiple = 2) @NonNull float[] pts, int offset, int count) {
@@ -1122,6 +1141,7 @@ public final class CanvasScript {
      * Add a path to the render stack
      * @param path The path to render
      * @return self for chaining
+     * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawPath(Path, Paint)
      */
     public CanvasScript path(@NonNull Path path) {
