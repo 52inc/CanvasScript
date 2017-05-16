@@ -37,7 +37,7 @@ public class SaveParams implements CanvasParams {
 
     @Override
     public int draw(Canvas canvas) {
-        if (flags != -1) {
+        if (flags == -1) {
             return canvas.save();
         } else {
             return canvas.save(flags);

@@ -131,7 +131,7 @@ public final class CanvasScript {
      * {@link Canvas} created
      * @param bitmap the base drawing bitmap
      * @return self for chaining
-     * @throws IllegalStateException if bitmap is not mutable or is recycled
+     * @throws IllegalArgumentException if bitmap is not mutable or is recycled
      * @see Canvas
      */
     public static CanvasScript create(@NonNull Bitmap bitmap) {
