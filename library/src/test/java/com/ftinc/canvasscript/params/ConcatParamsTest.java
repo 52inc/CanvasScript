@@ -18,29 +18,32 @@ package com.ftinc.canvasscript.params;
 
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.verify;
 
 
-public class SaveParams implements CanvasParams {
+@RunWith(MockitoJUnitRunner.class)
+public class ConcatParamsTest {
 
-    private final int flags;
-
-
-    public SaveParams() {
-        flags = -1;
-    }
+    @Mock Matrix matrix;
+    @Mock Canvas canvas;
 
 
-    public SaveParams(int flags) {
-        this.flags = flags;
-    }
+    @Test
+    public void shouldConcatMatrixToCanvas() {
+        ConcatParams params = new ConcatParams(matrix);
 
+        int result = params.draw(canvas);
 
-    @Override
-    public int draw(Canvas canvas) {
-        if (flags == -1) {
-            return canvas.save();
-        } else {
-            return canvas.save(flags);
-        }
+        verify(canvas).concat(matrix);
+        assertThat(result, is(CanvasParams.NO_SAVE));
     }
 }

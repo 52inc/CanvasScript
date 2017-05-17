@@ -51,7 +51,10 @@ public class RectParams implements CanvasParams {
         this.rect = rect;
         this.paint = paint;
         rectF = null;
-        left = top = right = bottom = 0;
+        left = 0;
+        top = 0;
+        right = 0;
+        bottom = 0;
     }
 
 
@@ -59,7 +62,10 @@ public class RectParams implements CanvasParams {
         this.rectF = rect;
         this.paint = paint;
         this.rect = null;
-        left = top = right = bottom = 0;
+        left = 0;
+        top = 0;
+        right = 0;
+        bottom = 0;
     }
 
 

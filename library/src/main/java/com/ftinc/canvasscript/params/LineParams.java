@@ -25,6 +25,8 @@ import android.support.annotation.Size;
 
 public class LineParams implements CanvasParams {
 
+    public static final int SIZE = 4;
+
     private final float[] pts;
     private final int offset;
     private final int count;
@@ -35,16 +37,16 @@ public class LineParams implements CanvasParams {
         this.paint = paint;
         pts = new float[] { startX, startY, endX, endY };
         offset = 0;
-        count = 4;
+        count = SIZE;
     }
 
 
-    public LineParams(@Size(multiple = 4) @NonNull float[] pts, @NonNull Paint paint) {
+    public LineParams(@Size(multiple = SIZE) @NonNull float[] pts, @NonNull Paint paint) {
         this(pts, 0, pts.length, paint);
     }
 
 
-    public LineParams(@Size(multiple = 4) @NonNull float[] pts, int offset, int count, @NonNull Paint paint) {
+    public LineParams(@Size(multiple = SIZE) @NonNull float[] pts, int offset, int count, @NonNull Paint paint) {
         this.pts = pts;
         this.offset = offset;
         this.count = count;
@@ -52,9 +54,10 @@ public class LineParams implements CanvasParams {
     }
 
 
+    @SuppressWarnings("checkstyle:magicnumber")
     @Override
     public int draw(Canvas canvas) {
-        if (pts.length == 4) {
+        if (pts.length == SIZE) {
             canvas.drawLine(pts[0], pts[1], pts[2], pts[3], paint);
         } else {
             canvas.drawLines(pts, offset, count, paint);

@@ -18,29 +18,32 @@ package com.ftinc.canvasscript.params;
 
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.verify;
 
 
-public class SaveParams implements CanvasParams {
+@RunWith(MockitoJUnitRunner.class)
+public class PaintParamsTest {
 
-    private final int flags;
-
-
-    public SaveParams() {
-        flags = -1;
-    }
+    @Mock Paint paint;
+    @Mock Canvas canvas;
 
 
-    public SaveParams(int flags) {
-        this.flags = flags;
-    }
+    @Test
+    public void shouldDrawPaint() {
+        PaintParams params = new PaintParams(paint);
 
+        int result = params.draw(canvas);
 
-    @Override
-    public int draw(Canvas canvas) {
-        if (flags == -1) {
-            return canvas.save();
-        } else {
-            return canvas.save(flags);
-        }
+        verify(canvas).drawPaint(paint);
+        assertThat(result, is(CanvasParams.NO_SAVE));
     }
 }

@@ -70,31 +70,44 @@ import java.util.Deque;
 import java.util.Locale;
 
 
+/**
+ * <p>
+ *     A utility class that provides a chainable set of APIs for working with Android's {@link Canvas}
+ *     for custom drawing. You can use it to draw to an existing canvas (i.e. if your working with custom views) or
+ *     for generating/modifying {@link Bitmap}s
+ * </p>
+ *
+ * @author Drew Heavner
+ * @since 2017
+ */
 public final class CanvasScript {
 
     private static final String TAG = "CanvasScript";
     private static final int DEFAULT_PAINT_FLAGS = Paint.ANTI_ALIAS_FLAG;
+    private static final int DEFAULT_QUEUE_SIZE = 10;
+    private static final int MAX_ALPHA = 255;
 
     static {
         Log.setEnabled(BuildConfig.DEBUG);
     }
 
-    @Nullable private Bitmap bitmap;
+    @NonNull private final Canvas rootCanvas;
+    @Nullable private final Bitmap bitmap;
     @Nullable private Paint currentPaint;
-    @NonNull private Canvas rootCanvas;
     private final Deque<CanvasParams> parameters;
     private int currentSaveCount = CanvasParams.NO_SAVE;
 
 
     private CanvasScript(@NonNull Canvas canvas) {
-        parameters = new ArrayDeque<>(10);
+        parameters = new ArrayDeque<>(DEFAULT_QUEUE_SIZE);
         rootCanvas = canvas;
+        bitmap = null;
     }
 
 
     private CanvasScript(@NonNull Bitmap bitmap) {
         this.bitmap = bitmap;
-        parameters = new ArrayDeque<>(10);
+        parameters = new ArrayDeque<>(DEFAULT_QUEUE_SIZE);
         rootCanvas = new Canvas(this.bitmap);
     }
 
@@ -128,11 +141,11 @@ public final class CanvasScript {
      * {@link Canvas} created
      * @param bitmap the base drawing bitmap
      * @return self for chaining
-     * @throws IllegalStateException if bitmap is not mutable or is recycled
+     * @throws IllegalArgumentException if bitmap is not mutable or is recycled
      * @see Canvas
      */
     public static CanvasScript create(@NonNull Bitmap bitmap) {
-        if (!bitmap.isMutable() || bitmap.isRecycled()){
+        if (!bitmap.isMutable() || bitmap.isRecycled()) {
             throw new IllegalArgumentException("Bitmap must be mutable and unrecycled");
         }
         return new CanvasScript(bitmap);
@@ -179,7 +192,7 @@ public final class CanvasScript {
     }
 
 
-    public CanvasScript alpha(@IntRange(from = 0, to = 255) int alpha) {
+    public CanvasScript alpha(@IntRange(from = 0, to = MAX_ALPHA) int alpha) {
         createPaintIfNull();
         currentPaint.setAlpha(alpha);
         return this;
@@ -188,7 +201,7 @@ public final class CanvasScript {
 
     public CanvasScript alpha(@FloatRange(from = 0f, to = 1f) float alpha) {
         createPaintIfNull();
-        currentPaint.setAlpha((int) (255f * alpha));
+        currentPaint.setAlpha((int) (MAX_ALPHA * alpha));
         return this;
     }
 
@@ -454,7 +467,7 @@ public final class CanvasScript {
      * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts) {
         checkNonNullPaint();
         parameters.add(new LineParams(pts, getPaintCopy()));
         return this;
@@ -468,7 +481,7 @@ public final class CanvasScript {
      * @return self for chaining
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts, @NonNull Paint paint) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts, @NonNull Paint paint) {
         parameters.add(new LineParams(pts, paint));
         return this;
     }
@@ -484,7 +497,7 @@ public final class CanvasScript {
      * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts, int offset, int count) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts, int offset, int count) {
         checkNonNullPaint();
         parameters.add(new LineParams(pts, offset, count, getPaintCopy()));
         return this;
@@ -501,7 +514,8 @@ public final class CanvasScript {
      * @return self for chaining
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts, int offset, int count, @NonNull Paint paint) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts, int offset, int count,
+                              @NonNull Paint paint) {
         parameters.add(new LineParams(pts, offset, count, paint));
         return this;
     }
@@ -819,7 +833,8 @@ public final class CanvasScript {
      * @return self for chaining
      * @see Canvas#drawArc(RectF, float, float, boolean, Paint)
      */
-    public CanvasScript arc(@NonNull RectF bounds, float startAngle, float sweepAngle, boolean useCenter, @NonNull Paint paint) {
+    public CanvasScript arc(@NonNull RectF bounds, float startAngle, float sweepAngle, boolean useCenter,
+                            @NonNull Paint paint) {
         parameters.add(new ArcParams(bounds, startAngle, sweepAngle, useCenter, paint));
         return this;
     }
@@ -1305,7 +1320,8 @@ public final class CanvasScript {
      * @return self for chaining
      * @see Canvas#saveLayer(RectF, Paint)
      */
-    public CanvasScript saveLayer(float left, float top, float right, float bottom, @Nullable Paint paint, int saveFlags) {
+    public CanvasScript saveLayer(float left, float top, float right, float bottom, @Nullable Paint paint,
+                                  int saveFlags) {
         parameters.add(new SaveLayerParams(left, top, right, bottom, paint, saveFlags));
         return this;
     }
@@ -1342,7 +1358,7 @@ public final class CanvasScript {
      * @see Canvas#saveLayerAlpha(float, float, float, float, int, int)
      */
     public CanvasScript saveLayer(float left, float top, float right, float bottom,
-                                  @IntRange(from = 0, to = 255) int alpha, int saveFlags) {
+                                  @IntRange(from = 0, to = MAX_ALPHA) int alpha, int saveFlags) {
         parameters.add(new SaveLayerParams(left, top, right, bottom, alpha, saveFlags));
         return this;
     }
@@ -1359,7 +1375,7 @@ public final class CanvasScript {
      * @return self for chaining
      * @see Canvas#saveLayerAlpha(RectF, int, int)
      */
-    public CanvasScript saveLayer(RectF bounds, @IntRange(from = 0, to = 255) int alpha, int saveFlags) {
+    public CanvasScript saveLayer(RectF bounds, @IntRange(from = 0, to = MAX_ALPHA) int alpha, int saveFlags) {
         parameters.add(new SaveLayerParams(bounds, alpha, saveFlags));
         return this;
     }
@@ -1480,9 +1496,6 @@ public final class CanvasScript {
     }
 
 
-    /*  Script 'execution' Methods  */
-
-
     /**
      * Render all previously compiled commands into a single bitmap and return it
      * @return The bitmap that is a result of all the scripted commands, returns null if this
@@ -1520,9 +1533,10 @@ public final class CanvasScript {
     }
 
 
-    private void checkNonNullPaint() throws IllegalStateException{
+    private void checkNonNullPaint() {
         if (currentPaint == null) {
-            throw new IllegalStateException("The current Paint state cannot be null, be sure to configure the scripts painting preference");
+            throw new IllegalStateException("The current Paint state cannot be null, be sure to configure "
+                    + "the scripts painting preference");
         }
     }
 
