@@ -25,7 +25,7 @@ task checkstyle(type: Checkstyle) {
 //  group 'Verification tasks' - Already added to app:check by check.dependsOn 'checkstyle'
     description "Generate Checkstyle reports for this build"     //Add description to task
 
-    ignoreFailures true //if false build will fail when checkstyle warning is detected!! (Ultra strict)
+    ignoreFailures false //if false build will fail when checkstyle warning is detected!! (Ultra strict)
 
     //Config file for checkstyle
     configFile file("${rootProject.projectDir}/tools/config/checkstyle/checkstyle.xml")

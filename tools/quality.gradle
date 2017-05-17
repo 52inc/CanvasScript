@@ -15,5 +15,4 @@
  */
 
 apply from: '../tools/checkstyle.gradle'
-apply from: '../tools/pmd.gradle'
 apply from: '../tools/findbugs.gradle'

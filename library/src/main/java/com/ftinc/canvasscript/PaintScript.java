@@ -40,6 +40,8 @@ import java.util.Locale;
 
 public final class PaintScript {
 
+    private static final int DEFAULT_ALPHA = 255;
+
     private final Paint paint;
 
 
@@ -100,14 +102,14 @@ public final class PaintScript {
     }
 
 
-    public PaintScript alpha(@IntRange(from = 0, to = 255) int alpha) {
+    public PaintScript alpha(@IntRange(from = 0, to = DEFAULT_ALPHA) int alpha) {
         paint.setAlpha(alpha);
         return this;
     }
 
 
     public PaintScript alpha(@FloatRange(from = 0f, to = 1f) float alpha) {
-        paint.setAlpha((int) (255f * alpha));
+        paint.setAlpha((int) (DEFAULT_ALPHA * alpha));
         return this;
     }
 

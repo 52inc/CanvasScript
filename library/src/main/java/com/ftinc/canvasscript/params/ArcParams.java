@@ -34,7 +34,8 @@ public class ArcParams implements CanvasParams {
     /**
      * @see Canvas#drawArc(RectF, float, float, boolean, Paint)
      */
-    public ArcParams(@NonNull RectF bounds, float startAngle, float sweepAngle, boolean useCenter, @NonNull Paint paint) {
+    public ArcParams(@NonNull RectF bounds, float startAngle, float sweepAngle, boolean useCenter,
+                     @NonNull Paint paint) {
         this.bounds = bounds;
         this.startAngle = startAngle;
         this.sweepAngle = sweepAngle;

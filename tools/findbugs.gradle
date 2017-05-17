@@ -27,7 +27,7 @@ task findbugs(type: FindBugs) {
 
     //if false build will fail when checkstyle warning is detected!! (Ultra strict)
     // same as lintOptions { abortOnError false }
-    ignoreFailures true
+    ignoreFailures false
 
     //Higher levels increase precision and find more bugs at the expense of running time and memory consumption.
     effort = 'max'

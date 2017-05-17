@@ -23,8 +23,9 @@
     <property name="severity" value="warning"/>
 
     <module name="TreeWalker">
-
         <property name="tabWidth" value="4"/>
+        <module name="SuppressWarningsHolder" />
+        <module name="SuppressWarnings"/>
         <module name="ConstantName"/>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
@@ -41,7 +42,9 @@
             <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
         </module>
         <module name="MethodLength"/>
-        <module name="ParameterNumber"/>
+        <module name="ParameterNumber">
+            <property name="max" value="8" />
+        </module>
         <module name="EmptyForIteratorPad"/>
         <module name="MethodParamPad"/>
         <module name="NoWhitespaceAfter">
@@ -67,7 +70,7 @@
         <!-- <module name="HiddenField"/> -->
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
-        <module name="MagicNumber"/>
+        <module name="MagicNumber" />
         <module name="MissingSwitchDefault"/>
         <module name="RedundantThrows">
             <property name="suppressLoadErrors" value="true"/>
@@ -100,6 +103,7 @@
         </module>
         <module name="InnerTypeLast"/>
     </module>
+    <module name="SuppressWarningsFilter"/>
     <module name="NewlineAtEndOfFile">
         <property name="severity" value="ignore"/>
         <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>

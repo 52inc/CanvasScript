@@ -26,6 +26,8 @@ import android.support.annotation.Nullable;
 
 public class ColorParams implements CanvasParams {
 
+    public static final int DEFAULT_ALPHA = 255;
+
     @ColorInt private final int color;
     @Nullable private final PorterDuff.Mode mode;
 
@@ -42,7 +44,7 @@ public class ColorParams implements CanvasParams {
 
 
     public ColorParams(int r, int g, int b) {
-        this(255, r, g, b, null);
+        this(DEFAULT_ALPHA, r, g, b, null);
     }
 
 

@@ -467,7 +467,7 @@ public final class CanvasScript {
      * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts) {
         checkNonNullPaint();
         parameters.add(new LineParams(pts, getPaintCopy()));
         return this;
@@ -481,7 +481,7 @@ public final class CanvasScript {
      * @return self for chaining
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts, @NonNull Paint paint) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts, @NonNull Paint paint) {
         parameters.add(new LineParams(pts, paint));
         return this;
     }
@@ -497,7 +497,7 @@ public final class CanvasScript {
      * @throws IllegalStateException when no previous paint method is called
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts, int offset, int count) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts, int offset, int count) {
         checkNonNullPaint();
         parameters.add(new LineParams(pts, offset, count, getPaintCopy()));
         return this;
@@ -514,7 +514,8 @@ public final class CanvasScript {
      * @return self for chaining
      * @see Canvas#drawLines(float[], Paint)
      */
-    public CanvasScript lines(@Size(multiple = 4) @NonNull float[] pts, int offset, int count, @NonNull Paint paint) {
+    public CanvasScript lines(@Size(multiple = LineParams.SIZE) @NonNull float[] pts, int offset, int count,
+                              @NonNull Paint paint) {
         parameters.add(new LineParams(pts, offset, count, paint));
         return this;
     }
@@ -1534,8 +1535,8 @@ public final class CanvasScript {
 
     private void checkNonNullPaint() {
         if (currentPaint == null) {
-            throw new IllegalStateException("The current Paint state cannot be null, be sure to configure " +
-                    "the scripts painting preference");
+            throw new IllegalStateException("The current Paint state cannot be null, be sure to configure "
+                    + "the scripts painting preference");
         }
     }
 
