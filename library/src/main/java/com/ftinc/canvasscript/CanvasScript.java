@@ -70,6 +70,16 @@ import java.util.Deque;
 import java.util.Locale;
 
 
+/**
+ * <p>
+ *     A utility class that provides a chainable set of APIs for working with Android's {@link Canvas}
+ *     for custom drawing. You can use it to draw to an existing canvas (i.e. if your working with custom views) or
+ *     for generating/modifying {@link Bitmap}s
+ * </p>
+ *
+ * @author Drew Heavner
+ * @since 2017
+ */
 public final class CanvasScript {
 
     private static final String TAG = "CanvasScript";
@@ -1483,9 +1493,6 @@ public final class CanvasScript {
         parameters.add(new ConcatParams(matrix));
         return this;
     }
-
-
-    /*  Script 'execution' Methods  */
 
 
     /**
