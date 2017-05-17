@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.ftinc.canvasscript.params;
 
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.RectF;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,38 +27,44 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ArcParamsTest {
+public class LineParamsTest {
 
-    private static final float LEFT = 0f;
-    private static final float TOP = 0f;
-    private static final float RIGHT = 10f;
-    private static final float BOTTOM = 15f;
-    private static final float START_ANGLE = 0f;
-    private static final float SWEEP_ANGLE = 180f;
+    private static final float STARTX = 0f;
+    private static final float ENDX = 10f;
+    private static final float STARTY = 0f;
+    private static final float ENDY = 40f;
 
     @Mock Paint paint;
     @Mock Canvas canvas;
 
 
     @Test
-    public void shouldDrawArc() {
-        RectF rect = mock(RectF.class);
-        when(rect.toString()).thenReturn("");
-        rect.left = LEFT;
-        rect.top = TOP;
-        rect.right = RIGHT;
-        rect.bottom = BOTTOM;
-        ArcParams params = new ArcParams(rect, START_ANGLE, SWEEP_ANGLE, false, paint);
+    public void shouldDrawSingleLine() {
+        LineParams params = new LineParams(STARTX, STARTY, ENDX, ENDY, paint);
 
         int result = params.draw(canvas);
 
-        verify(canvas).drawArc(rect, START_ANGLE, SWEEP_ANGLE, false, paint);
+        verify(canvas).drawLine(STARTX, STARTY, ENDX, ENDY, paint);
+        assertThat(result, is(CanvasParams.NO_SAVE));
+    }
+
+
+    @Test
+    public void shouldDrawMultipleLines() {
+        float[] pts = new float[] {
+                STARTX, STARTY, ENDX, ENDY,
+                0f, 0f, 10f, 10f,
+                0f, 0f, 500f, 500f
+        };
+        LineParams params = new LineParams(pts, paint);
+
+        int result = params.draw(canvas);
+
+        verify(canvas).drawLines(pts, 0, pts.length, paint);
         assertThat(result, is(CanvasParams.NO_SAVE));
     }
 }

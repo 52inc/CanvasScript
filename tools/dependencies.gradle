@@ -26,4 +26,5 @@ ext {
     jUnitVersion = '4.12'
     assertJVersion = '1.7.1'
     mockitoVersion = '1.9.5'
+    powermockVersion = '1.6.6'
 }

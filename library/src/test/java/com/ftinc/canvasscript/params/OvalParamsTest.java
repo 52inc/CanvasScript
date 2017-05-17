@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.ftinc.canvasscript.params;
 
 
@@ -29,36 +30,32 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ArcParamsTest {
+public class OvalParamsTest {
 
     private static final float LEFT = 0f;
     private static final float TOP = 0f;
-    private static final float RIGHT = 10f;
-    private static final float BOTTOM = 15f;
-    private static final float START_ANGLE = 0f;
-    private static final float SWEEP_ANGLE = 180f;
+    private static final float RIGHT = 80f;
+    private static final float BOTTOM = 100f;
 
     @Mock Paint paint;
     @Mock Canvas canvas;
 
 
     @Test
-    public void shouldDrawArc() {
+    public void shouldDrawOval() {
         RectF rect = mock(RectF.class);
-        when(rect.toString()).thenReturn("");
         rect.left = LEFT;
         rect.top = TOP;
         rect.right = RIGHT;
         rect.bottom = BOTTOM;
-        ArcParams params = new ArcParams(rect, START_ANGLE, SWEEP_ANGLE, false, paint);
+        OvalParams params = new OvalParams(rect, paint);
 
         int result = params.draw(canvas);
 
-        verify(canvas).drawArc(rect, START_ANGLE, SWEEP_ANGLE, false, paint);
+        verify(canvas).drawOval(rect, paint);
         assertThat(result, is(CanvasParams.NO_SAVE));
     }
 }

@@ -40,11 +40,12 @@ dependencies {
     testCompile "org.assertj:assertj-core:$assertJVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"
     testCompile "org.robolectric:robolectric:$robolectricVersion"
+    testCompile "org.powermock:powermock-module-junit4:$powermockVersion"
+    testCompile "org.powermock:powermock-api-mockito:$powermockVersion"
     compile "com.android.support:support-annotations:$supportVersion"
 }
 
 apply from: '../tools/bintray-publish.gradle'
-//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
 
 afterEvaluate { project ->
     android.libraryVariants.all { variant ->

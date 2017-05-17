@@ -13,52 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.ftinc.canvasscript.params;
 
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ArcParamsTest {
+public class RotateParamsTest {
 
-    private static final float LEFT = 0f;
-    private static final float TOP = 0f;
-    private static final float RIGHT = 10f;
-    private static final float BOTTOM = 15f;
-    private static final float START_ANGLE = 0f;
-    private static final float SWEEP_ANGLE = 180f;
+    private static final float DEGREES = 275f;
+    private static final float PX = 10f;
+    private static final float PY = 10F;
 
-    @Mock Paint paint;
     @Mock Canvas canvas;
 
 
     @Test
-    public void shouldDrawArc() {
-        RectF rect = mock(RectF.class);
-        when(rect.toString()).thenReturn("");
-        rect.left = LEFT;
-        rect.top = TOP;
-        rect.right = RIGHT;
-        rect.bottom = BOTTOM;
-        ArcParams params = new ArcParams(rect, START_ANGLE, SWEEP_ANGLE, false, paint);
+    public void shouldRotateOnDefaultPivot() {
+        RotateParams params = new RotateParams(DEGREES);
 
         int result = params.draw(canvas);
 
-        verify(canvas).drawArc(rect, START_ANGLE, SWEEP_ANGLE, false, paint);
+        verify(canvas).rotate(DEGREES);
+        assertThat(result, is(CanvasParams.NO_SAVE));
+    }
+
+
+    @Test
+    public void shouldRotateWithPivot() {
+        RotateParams params = new RotateParams(DEGREES, PX, PY);
+
+        int result = params.draw(canvas);
+
+        verify(canvas).rotate(DEGREES, PX, PY);
         assertThat(result, is(CanvasParams.NO_SAVE));
     }
 }
