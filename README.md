@@ -1,7 +1,7 @@
 # CanvasScript
 A canvas rendering wrapper for Android's Canvas and Paint classes
 
-[![Download](https://api.bintray.com/packages/52inc/CanvasScript/CanvasScript/images/download.svg) ](https://bintray.com/52inc/CanvasScript/CanvasScript/_latestVersion)
+[![Build Status](https://travis-ci.org/52inc/CanvasScript.svg?branch=master)](https://travis-ci.org/52inc/CanvasScript) [![Download](https://api.bintray.com/packages/52inc/CanvasScript/CanvasScript/images/download.svg) ](https://bintray.com/52inc/CanvasScript/CanvasScript/_latestVersion) 
 
 ## Include
 ```groovy
